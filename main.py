@@ -20,6 +20,8 @@ def formVillage(village, town_hall, list_of_huts, list_of_cannons, list_of_wizar
     
     start_lth, end_lth = (int) ((v_length - th_length) / 2) + 4 + 8, (int) (((v_length - th_length) / 2) + th_length) + 3 + 8
     start_bth, end_bth = (int) ((v_breadth - th_breadth) / 2) + 4 + 8, (int) (((v_breadth - th_breadth) / 2) + th_breadth) + 3 + 8
+
+
     
     for i in range(v_length + 4 + 8):
         for j in range(v_breadth + 4 + 8):
@@ -2045,7 +2047,7 @@ def clear():
     else:
         _ = system('clear')
         
-level = 0
+level = 1
 
 Ray = Village("Ray", 40, 80)
 RayHall = Town_Hall(4, 6, 432)
@@ -2105,17 +2107,11 @@ character = input("Type 'q' for choosing Queen and 'k' for choosing King: ")
 if (character == 'q'):
 
     while (level <= 3):
-    
+ 
         if (level == 1):
             formVillage(Ray, RayHall, hut_list[0:4], cannon_list[0: 4], wizard_tower_list[0:2])
+            isEnd = False
             while(not IsEnd):
-                
-                cannon_attack(cannon_list[0:4], Rani)
-                wizard_tower_attack(wizard_tower_list[0:2], Rani)
-                barbarian_movement(Ray)
-                barbarian_attack(Rani, barbarian_list, archer_list, RayHall, hut_list[0:4], cannon_list[0:4], wizard_tower_list[0:2])
-                archer_movement(Ray)
-                archer_attack(Rani, barbarian_list, archer_list, RayHall, hut_list[0:4], cannon_list[0:4], wizard_tower_list[0:2])
 
                 if (print_bg_stats):
                     # clear()
@@ -2126,10 +2122,16 @@ if (character == 'q'):
                     print_bg_stats = False
                 check = get_input()
 
+                cannon_attack(cannon_list[0:4], Rani)
+                wizard_tower_attack(wizard_tower_list[0:2], Rani)
+                barbarian_movement(Ray)
+                barbarian_attack(Rani, barbarian_list, archer_list, RayHall, hut_list[0:4], cannon_list[0:4], wizard_tower_list[0:2])
+                archer_movement(Ray)
+                archer_attack(Rani, barbarian_list, archer_list, RayHall, hut_list[0:4], cannon_list[0:4], wizard_tower_list[0:2])
+
                 if ((check == 'w') or (check == 's') or (check == 'a') or (check == 'd')):
                     queen_move(Rani, check)
                 elif (check == "l"):
-                    clear()
                     print_bg_stats = True
                 elif (check == "y"):
                     barbarian_movement(Ray)
@@ -2159,7 +2161,7 @@ if (character == 'q'):
                     sys.exit(0)
 
                 if (check_situation(RayHall, hut_list[0:4], cannon_list[0:4], wizard_tower_list[0:2], Rani, barbarian_list, archer_list) == 2):
-                    RayHall.HP = Ray
+                    RayHall.HP = RayHall.totalHP
                     for hut in hut_list:
                         hut.HP = hut.totalHP
                     for cannon in cannon_list:
@@ -2171,7 +2173,14 @@ if (character == 'q'):
                         barbarian.HP = barbarian.totalHP
                     for archer in archer_list:
                         archer.HP = archer.totalHP
+                    occupied = []
+                    village_occupied = {"Huts" : [], "Cannons" : [], "Wizard Towers": [], "Town Hall" : [], "Walls": {}, "Empty Space": [], "Spawning Points": []}
+                    queen_position = ()
+                    queen_position = ()
+                    barbarian_position = {}
+                    archer_position = {}
                     level += 1
+                    isEnd = True
                     break
                 
                 if (check != None):
@@ -2179,6 +2188,7 @@ if (character == 'q'):
 
         if (level == 2):
             formVillage(Ray, RayHall, hut_list[0:6], cannon_list[0: 5], wizard_tower_list[0:3])
+            isEnd = False
             while(not IsEnd):
 
                 cannon_attack(cannon_list[0:5], Rani)
@@ -2228,7 +2238,7 @@ if (character == 'q'):
                     sys.exit(0)
 
                 if (check_situation(RayHall, hut_list[0:6], cannon_list[0:5], wizard_tower_list[0:3], Rani, barbarian_list, archer_list) == 2):
-                    RayHall.HP = Ray
+                    RayHall.HP = RayHall.totalHP
                     for hut in hut_list:
                         hut.HP = hut.totalHP
                     for cannon in cannon_list:
@@ -2240,7 +2250,14 @@ if (character == 'q'):
                         barbarian.HP = barbarian.totalHP
                     for archer in archer_list:
                         archer.HP = archer.totalHP
+                    occupied = []
+                    village_occupied = {"Huts" : [], "Cannons" : [], "Wizard Towers": [], "Town Hall" : [], "Walls": {}, "Empty Space": [], "Spawning Points": []}
+                    queen_position = ()
+                    queen_position = ()
+                    barbarian_position = {}
+                    archer_position = {}
                     level += 1
+                    isEnd = True
                     break
                 
                 if (check != None):
@@ -2248,6 +2265,7 @@ if (character == 'q'):
 
         if (level == 3):
             formVillage(Ray, RayHall, hut_list[0:8], cannon_list[0: 6], wizard_tower_list[0:4])
+            isEnd = False
             while(not IsEnd):
 
                 cannon_attack(cannon_list[0:6], Rani)
@@ -2258,6 +2276,7 @@ if (character == 'q'):
                 archer_attack(Rani, barbarian_list, archer_list, RayHall, hut_list[0:8], cannon_list[0:6], wizard_tower_list[0:4])
 
                 if (print_bg_stats):
+                    # clear()
                     printBackground(Ray, RayHall, hut_list[0:8], cannon_list[0:6], wizard_tower_list[0:4], Rani)
                     print("\n\n")
                     printStats(RayHall, hut_list[0:8], cannon_list[0:6], wizard_tower_list[0:4], Rani, barbarian_list, archer_list)
@@ -2296,7 +2315,7 @@ if (character == 'q'):
                     sys.exit(0)
 
                 if (check_situation(RayHall, hut_list[0:8], cannon_list[0:6], wizard_tower_list[0:4], Rani, barbarian_list, archer_list) == 2):
-                    RayHall.HP = Ray
+                    RayHall.HP = RayHall.totalHP
                     for hut in hut_list:
                         hut.HP = hut.totalHP
                     for cannon in cannon_list:
@@ -2308,7 +2327,14 @@ if (character == 'q'):
                         barbarian.HP = barbarian.totalHP
                     for archer in archer_list:
                         archer.HP = archer.totalHP
+                    occupied = []
+                    village_occupied = {"Huts" : [], "Cannons" : [], "Wizard Towers": [], "Town Hall" : [], "Walls": {}, "Empty Space": [], "Spawning Points": []}
+                    queen_position = ()
+                    queen_position = ()
+                    barbarian_position = {}
+                    archer_position = {}
                     level += 1
+                    isEnd = True
                     break
                 
                 if (check != None):
@@ -2317,86 +2343,10 @@ if (character == 'q'):
 elif (character == 'k'):
 
     while (level <= 3):
-
-        if (level == 0):
-            formVillage(Ray, RayHall, hut_list[0:1], cannon_list[0: 1], wizard_tower_list[0:1])
-            while(not IsEnd):
-                
-                cannon_attack(cannon_list[0:1], Raja)
-                wizard_tower_attack(wizard_tower_list[0:1], Raja)
-                barbarian_movement(Ray)
-                barbarian_attack(Raja, barbarian_list, archer_list, RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1])
-                archer_movement(Ray)
-                archer_attack(Raja, barbarian_list, archer_list, RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1])
-
-                if (print_bg_stats):
-                    # clear()
-                    printBackground(Ray, RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1], Raja)
-                    print("\n\n")
-                    printStats(RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1], Raja, barbarian_list, archer_list)
-                    print("\n")
-                    print_bg_stats = False
-                check = get_input()
-
-                if ((check == 'w') or (check == 's') or (check == 'a') or (check == 'd')):
-                    king_move(Raja, check)
-                elif (check == "l"):
-                    print_bg_stats = True
-                elif (check == "y"):
-                    Raja.movement_speed = 10
-                elif (check == "x"):
-                    Raja.movement_speed = 1
-                    # barbarian_movement(Ray)
-                    # barbarian_attack(Raja, barbarian_list, archer_list, RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1])
-                elif (check == "m"):
-                    print(barbarian_position)
-                elif (check == 'r'):
-                    rage_spell(Raja, barbarian_list, archer_list)
-                elif (check == 'h'):
-                    heal_spell(Raja, barbarian_list, archer_list)
-                elif (check == ' '):
-                    king_attack(Raja, barbarian_list, archer_list, RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1])
-                # elif (check = 't')
-                elif ((check == 'p') or (check == 'o') or (check == 'i')):
-                    if ((king_position != ()) and (len(barbarian_position) == len(barbarian_list)) and (len(archer_position) == len(archer_list))):
-                        print("All troops on field.")
-                    else:
-                        if (not king_spawned):
-                            spawn_king(check, spawning_point_list)
-                        else:
-                            if (not (len(barbarian_position) == len(barbarian_list))):
-                                barbarian_spawn(check, barbarian_list, spawning_point_list)
-                            elif (len(barbarian_position) == len(barbarian_list)):
-                                archer_spawn(check, archer_list, spawning_point_list)
-                                print("Here are the archers")
-                elif (check == 'x'):
-                    print("Exiting")
-                    sys.exit(0)
-
-                if (check_situation(RayHall, hut_list[0:1], cannon_list[0:1], wizard_tower_list[0:1], Raja, barbarian_list, archer_list) == 2):
-                    RayHall.HP = RayHall.totalHP
-                    for hut in hut_list:
-                        hut.HP = hut.totalHP
-                    for cannon in cannon_list:
-                        cannon.HP = cannon.totalHP
-                    for wizard_tower in wizard_tower_list:
-                        wizard_tower.HP = wizard_tower.totalHP
-                    Raja.HP = Raja.totalHP
-                    for barbarian in barbarian_list:
-                        barbarian.HP = barbarian.totalHP
-                    for archer in archer_list:
-                        archer.HP = archer.totalHP
-                    level += 1
-                    isEnd = False
-                    break
-                
-                if (check != None):
-                    time.sleep(0.3)
-    
+ 
         if (level == 1):
             formVillage(Ray, RayHall, hut_list[0:4], cannon_list[0: 4], wizard_tower_list[0:2])
-            printBackground(Ray, RayHall, hut_list[0:4], cannon_list[0:4], wizard_tower_list[0:2], Raja)
-            isEnd = True
+            isEnd = False
             while(not IsEnd):
 
                 if (print_bg_stats):
@@ -2459,7 +2409,14 @@ elif (character == 'k'):
                         barbarian.HP = barbarian.totalHP
                     for archer in archer_list:
                         archer.HP = archer.totalHP
+                    occupied = []
+                    village_occupied = {"Huts" : [], "Cannons" : [], "Wizard Towers": [], "Town Hall" : [], "Walls": {}, "Empty Space": [], "Spawning Points": []}
+                    king_position = ()
+                    queen_position = ()
+                    barbarian_position = {}
+                    archer_position = {}
                     level += 1
+                    isEnd = True
                     break
                 
                 if (check != None):
@@ -2467,6 +2424,7 @@ elif (character == 'k'):
 
         if (level == 2):
             formVillage(Ray, RayHall, hut_list[0:6], cannon_list[0: 5], wizard_tower_list[0:3])
+            isEnd = False
             while(not IsEnd):
 
                 cannon_attack(cannon_list[0:5], Raja)
@@ -2516,7 +2474,7 @@ elif (character == 'k'):
                     sys.exit(0)
 
                 if (check_situation(RayHall, hut_list[0:6], cannon_list[0:5], wizard_tower_list[0:3], Raja, barbarian_list, archer_list) == 2):
-                    RayHall.HP = Ray
+                    RayHall.HP = RayHall.totalHP
                     for hut in hut_list:
                         hut.HP = hut.totalHP
                     for cannon in cannon_list:
@@ -2528,7 +2486,14 @@ elif (character == 'k'):
                         barbarian.HP = barbarian.totalHP
                     for archer in archer_list:
                         archer.HP = archer.totalHP
+                    occupied = []
+                    village_occupied = {"Huts" : [], "Cannons" : [], "Wizard Towers": [], "Town Hall" : [], "Walls": {}, "Empty Space": [], "Spawning Points": []}
+                    king_position = ()
+                    queen_position = ()
+                    barbarian_position = {}
+                    archer_position = {}
                     level += 1
+                    isEnd = True
                     break
                 
                 if (check != None):
@@ -2536,6 +2501,7 @@ elif (character == 'k'):
 
         if (level == 3):
             formVillage(Ray, RayHall, hut_list[0:8], cannon_list[0: 6], wizard_tower_list[0:4])
+            isEnd = False
             while(not IsEnd):
 
                 cannon_attack(cannon_list[0:6], Raja)
@@ -2585,7 +2551,7 @@ elif (character == 'k'):
                     sys.exit(0)
 
                 if (check_situation(RayHall, hut_list[0:8], cannon_list[0:6], wizard_tower_list[0:4], Raja, barbarian_list, archer_list) == 2):
-                    RayHall.HP = Ray
+                    RayHall.HP = RayHall.totalHP
                     for hut in hut_list:
                         hut.HP = hut.totalHP
                     for cannon in cannon_list:
@@ -2597,8 +2563,16 @@ elif (character == 'k'):
                         barbarian.HP = barbarian.totalHP
                     for archer in archer_list:
                         archer.HP = archer.totalHP
+                    occupied = []
+                    village_occupied = {"Huts" : [], "Cannons" : [], "Wizard Towers": [], "Town Hall" : [], "Walls": {}, "Empty Space": [], "Spawning Points": []}
+                    king_position = ()
+                    queen_position = ()
+                    barbarian_position = {}
+                    archer_position = {}
                     level += 1
+                    isEnd = True
                     break
                 
                 if (check != None):
                     time.sleep(0.3)
+
